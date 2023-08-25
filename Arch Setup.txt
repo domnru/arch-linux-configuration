@@ -1,0 +1,223 @@
+Arch Setup (Gnome only - Latest 44.3):
+Post Installation Arch Linux With Gnome 44.3 (Deutsch/German)
+!AMD CPU UND GPU!
+
+Schritt 1. Displays
+	1.1 Bildschirme digital positionieren
+		1.1.1 Einstellungen -> Bildschirme -> Bildschirme im GUI positionieren
+
+	1.2 Bildscirmauflösung einstellen
+		1.2.1 Einstellungen -> Bildschirme -> Bildschirm -> Auflösung
+
+	1.3 Bildwiederholrate einstellen
+		1.3.1 Einstellungen -> Bildschirme -> Bildschirm -> Bildwiederholrate -> Höchstes
+
+	1.4 Nachtmodus einstellen
+		1.4.1 Einstellungen -> Bildschirme -> Nachtmodus -> An (Zeit 06:00 - 21:30)
+
+Schritt 2. Maus und Tastatur
+	2.1 Mausbeschleunigung
+		2.1.1 Optimierungen -> Tastatur und Maus -> Beschleunigungsprofil -> Flat
+
+	2.2 Mauszeigergeschwindigkeit
+		2.2.1 Einstellungen -> Maus und Tastfeld -> Zeigergeschwindigkeit -> Einen weniger
+	
+Schritt 3. Sicherheit
+	3.1 USB - Sicherheit verbessern
+		3.1.1 Einstellungen -> Wechselmedien -> "Beim Einlegen von Datenträgern..." -> An
+
+	3.2 Gerätesicherheit
+		3.2.1 Einstellungen -> Datenschutz -> Gerätesicherheit -> Überprüfen
+			3.2.1.1 Wenn Gnome Gerätesicherheit nicht funktioniert könnte eine Installation von "gnome-firmware" helfen.
+					$ sudo pacman -Sy gnome-firmware
+
+	3.3 Secure Boot
+		3.3.1 BIOS -> Secure Boot -> Enabled
+
+	3.4 Benachrichtigungen
+		3.4.1 Einstellungen -> Benachrichtigungen -> Auf Sperrbildschirm -> Aus
+
+Schritt 4. Allgemein
+	4.1 Fenster
+		4.1.1 Optimierungen -> Fenster -> Neue Fenster Zentrieren -> An
+		4.1.2 Optimierungen -> Fenstertitelleisten -> Minimieren -> An
+		4.1.3 Einstellungen -> Erscheinungsbild -> Dunkel
+
+	4.2 Schriften 
+		4.2.1 Optimierungen -> Schriften -> Kantenglättung -> Subpixel
+
+	4.3 Zeit 
+		4.3.1 Einstellungen -> Datum und Zeit -> Zeitzone -> Berlin -> Automatisch
+
+	4.4 Dateichronik einschränken
+		4.4.1 Einstellungen -> Datenschutz -> Dateichronik -> Max 30 Tage + Löschen
+
+	4.5 Nutzer (Optional)
+		4.5.1 Einstellungen -> Benutzer -> Umbenennen
+
+Schritt 5. Treiber & Hardware-Optimierungen
+	5.1 Bluetooth 
+		5.1.1 Treiber installieren
+			5.1.1.1 $ sudo pacman -Sy bluez bluez-utils
+
+		5.1.2 Treiber starten 
+			5.1.2.1  sudo systemctl enable bluetooth
+
+	5.2 Powermanagement (Optional)
+		5.2.1 $ sudo pacman -Sy power-profiles-daemon
+
+Schritt 6. Programminstallation
+	6.1 Git
+		6.1.1 $ sudo pacman -Sy git
+
+	6.2 Rust Lang
+		6.2.1 $ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+		6.2.2 $ sudo pacman -S rustup
+
+	6.3 AUR Helper
+		6.3.1 Option 1. Paru (Requires 6.1, 6.2)
+			6.3.1.1 Installation
+				$ git clone https://aur.archlinux.org/paru.git
+				$ cd paru
+				$ makepkg -si
+
+			6.3.1.2 Optimierungen
+				# 1. Deaktivieren der Manuellen überprüfung der PGKBUILD Datei
+					# Erlaube schreib Berechtigung des aktuellen nutzers auf die Paru Konfiguration
+						$ sudo chmod o+w /etc/paru.conf
+					# Add SkipReview to paru config 
+						$ echo -e "\n#Skip PGKBUILD Check \nSkipReview" >> /etc/paru.conf
+					# Verbiete schreib Berechtigung des aktuellen nutzers auf die Paru Konfiguration
+						$ sudo chmod o-w /etc/paru.conf
+
+				# 2. Bat package für bessere ausgaben der PGKBUILD Datei (Optional | Nicht Empfohlen)
+					$ sudo pacman -Sy bat
+
+		6.3.2 Option 2. Yay
+			6.3.2.1 Installation
+				$ git clone https://aur.archlinux.org/yay.git
+				$ cd yay
+				$ makepkg -si
+
+	6.4 Dateiübertragen mit Smartphone (Optional | Empfohlen)
+		$ sudo pacman -Sy mtpfs
+		$ reboot
+
+	6.5 Backup System (Optional | Empfohlen)
+		$ sudo pacman -S deja-dup
+
+	6.6 Visual Studio Code (Optional | Empfohlen) (Benötigt Schritt 6.1, 6.2, 6.3)
+		$ paru -S visual-studio-code-bin
+
+		6.6.1 Optimierungen:
+			# 1. Weiße Top bar in Gnome Dark mode beheben
+				Visual Studio Code -> Settings -> Search -> "Title Bar Style" -> custom
+				
+			# 2. Bessere Animationen beim schreiben
+				Visual Studio Code -> Settings -> Search -> "Cursor SMooth Caret Animation" -> on
+
+			# 3. Undo Visual Studio Code Takeover Nautilus (Not Done)
+				echo inode/directory=org.gnome.Nautilus.desktop;code.desktop >> .config/mimeapps.list
+
+	6.7 Minecraft (Required)
+		6.7.1 Installation
+			$ paru -S minecraft-launcher
+			choose 1) jre-openjdk
+
+		# Optimierungen 
+			1. Optifine (Optional)
+				1.1 Starte die Minecraft Version für welche du Optifine installieren willst im normalen Minecraft Launcher
+				1.2 Installiere Optifine von https://optifine.net
+				1.3 $ java -jar /path/to/your/optifine-version.jar
+				1.4 Folge weiteren Anweisung von Optifine
+
+	8. Discord (Optional)
+		# Möglichkeit 1 (Original) Discord
+			# Möglichkeit 1.1 (Normaler weg)
+			$ sudo pacman -Sy discord
+
+			# Möglichkeit 1.2 (Sicherer und schneller)
+			$ paru -S discord_arch_electron
+
+		# Möglichkeit 2 (Third Party) WebCord
+			$ paru -S webcord
+			# oder (schneller aber unsicherer)
+			$ paru -S webcord-bin
+				
+		# Optimierungen:
+			# 1. Fehler beheben, dass keine Audio bei Discord im Stream übertragen wird. (Nicht fertig)
+				https://gitlab.freedesktop.org/pipewire/helvum
+
+// Still bad english/german from here
+
+	9. Gnome Erweiterungs-Manager
+		# Possibility 1 (Native)
+		1. $ paru -Sy extension-manager 
+		2. Choose "1) extension-manager"
+
+		# Possibility 2 (Flatpak, More Secure but buggy af)
+		Gnome Software -> Search -> "Erweiterungs-Manager" -> Installieren
+
+		# Empfohlene Erweiterungen
+			1. AppIndicator and KStatusNotifierItem Support
+			2. ...
+
+	10. Steam 
+		# 1. Enable multilib repository in pacman
+			# To enable multilib repository, uncomment the [multilib] section in /etc/pacman.conf:
+			
+			File: /etc/pacman.conf
+			_____________________________________
+			[multilib]
+			Include = /etc/pacman.d/mirrorlist
+			_____________________________________
+			# Then upgrade the system and install the desired multilib packages.
+
+		# 2. Install steam package
+			1. run $ sudo pacman -Sy steam
+			2. (Optional) choose 1) gnu-free-fonts 
+			3. (Optional) choose 4) vulkan-radeon
+			4. (Optional) choose 4) lib32-vulkan-radeon
+
+	11. Browser
+		# Default installed is the gnome browser
+
+		# Install own browser (Optional)
+			# Possibility 1 (Firefox)
+			run $ sudo pacman -Sy firefox
+				# Optimierungen
+					1. Firefox -> Settings -> Datenschutz und Sicherheit -> [Streng, Do Not Track Immer, Studien verbieten, Maximaler Schutz DNS]
+
+
+			# Possibility 2 (Chromium)
+			run $ sudo pacman -Sy chromium
+
+			# Possibility 3 (Ungoogled Chromium)
+			run $ paru -Sy ungoogled-chromium
+
+			# Optimierungen 
+			Erweiterung uBlock installieren
+
+	12. Spotify 
+		run $ paru -S spotify
+
+	13. KeePassXC
+		run $ sudo pacman -S keepassxc
+		
+	14. Node & Npm
+		1. run $ sudo pacman -Sy npm
+		2. mkdir ~/.npm-global
+		3. echo -e "export NPM_CONFIG_PREFIX=~/.npm-global\nexport PATH=\$PATH:~/.npm-global/bin" >> ~/.bashrc
+
+	15. NTFS Support
+		$ sudo pacman -S ntfs-3g
+
+	16. Setup SSH Key
+		$ ssh-keygen -b 6144
+		
+
+	
+
+
+			
+			
